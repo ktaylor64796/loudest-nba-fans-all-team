@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All 30 NBA Fanbases Ranked - RotoGrinders</title>
+    <style>
+        :root {
+            --rg-dark: #1a1d21;
+            --rg-panel: #24282d;
+            --rg-green: #27ae60;
+            --rg-blue: #3498db;
+            --rg-text: #ffffff;
+            --rg-border: #3d434a;
+        }
+
+        body {
+            background-color: var(--rg-dark);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--rg-text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--rg-panel);
+            border-radius: 12px;
+            border: 1px solid var(--rg-border);
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .title-block { margin-bottom: 25px; }
+        h2 { margin: 0; font-size: 24px; text-transform: uppercase; color: var(--rg-green); }
+        .subtitle { color: #bdc3c7; font-size: 14px; margin-top: 5px; }
+
+        .header-row {
+            display: grid;
+            grid-template-columns: 50px 1fr 100px 100px 120px 140px;
+            padding: 15px 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 11px;
+            color: #95a5a6;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-row div:nth-child(2) { text-align: left; }
+
+        .team-row {
+            display: grid;
+            grid-template-columns: 50px 1fr 100px 100px 120px 140px;
+            align-items: center;
+            padding: 12px 10px;
+            border-bottom: 1px solid var(--rg-border);
+            transition: background 0.1s;
+        }
+
+        .team-row:hover { background: rgba(255,255,255,0.03); }
+
+        .rank { font-weight: bold; font-size: 16px; color: #bdc3c7; text-align: center; }
+        .rank-top { color: var(--rg-green); font-size: 18px; }
+
+        .team-info { display: flex; align-items: center; gap: 12px; }
+        .team-logo { width: 32px; height: 32px; object-fit: contain; }
+        .team-names { display: flex; flex-direction: column; }
+        .team-name { font-weight: bold; font-size: 14px; }
+        .arena-name { font-size: 11px; color: #7f8c8d; }
+
+        .stat { font-family: 'Roboto Mono', monospace; font-size: 13px; text-align: center; }
+        .reddit-count { color: #ff4500; }
+        
+        .index-badge {
+            background: var(--rg-blue);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+            min-width: 50px;
+        }
+        .top-badge { background: var(--rg-green); }
+
+        /* Small screen adjustments */
+        @media (max-width: 768px) {
+            .header-row, .team-row { grid-template-columns: 40px 1fr 80px 100px; }
+            .header-row div:nth-child(3), .header-row div:nth-child(4),
+            .team-row div:nth-child(3), .team-row div:nth-child(4) { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="title-block">
+        <h2>NBA Loudness Index: Full Rankings</h2>
+        <p class="subtitle">2024-25 Season Data: Attendance, Capacity Fill, Arena Design & Reddit Engagement</p>
+    </div>
+
+    <div class="header-row">
+        <div>Rank</div>
+        <div>Team / Arena</div>
+        <div>Capacity %</div>
+        <div>Arch Score</div>
+        <div>Reddit Activity</div>
+        <div>Index (0-100)</div>
+    </div>
+
+    <div id="team-list">
+        </div>
+</div>
+
+<script>
+    const allTeams = [
+        { rank: 1, team: "Sacramento Kings", arena: "Golden 1 Center", cap: "111.95%", arch: "20/30", reddit: "41,602", index: 78.17, logo: "1610612758" },
+        { rank: 2, team: "Utah Jazz", arena: "Delta Center", cap: "108.40%", arch: "21/30", reddit: "29,346", index: 76.92, logo: "1610612762" },
+        { rank: 3, team: "Phoenix Suns", arena: "Footprint Center", cap: "113.83%", arch: "18/30", reddit: "54,632", index: 73.66, logo: "1610612756" },
+        { rank: 4, team: "Portland Trail Blazers", arena: "Moda Center", cap: "103.44%", arch: "20/30", reddit: "36,231", index: 73.37, logo: "1610612757" },
+        { rank: 5, team: "San Antonio Spurs", arena: "Frost Bank Center", cap: "107.80%", arch: "19/30", reddit: "36,983", index: 71.52, logo: "1610612759" },
+        { rank: 6, team: "Toronto Raptors", arena: "Scotiabank Arena", cap: "100.00%", arch: "20/30", reddit: "46,234", index: 69.39, logo: "1610612761" },
+        { rank: 7, team: "Philadelphia 76ers", arena: "Wells Fargo Center", cap: "95.75%", arch: "21/30", reddit: "57,859", index: 64.17, logo: "1610612755" },
+        { rank: 8, team: "Washington Wizards", arena: "Capital One Arena", cap: "99.04%", arch: "18/30", reddit: "33,453", index: 63.88, logo: "1610612764" },
+        { rank: 9, team: "New York Knicks", arena: "Madison Square Garden", cap: "94.62%", arch: "23/30", reddit: "32,920", index: 60.09, logo: "1610612752" },
+        { rank: 10, team: "New Orleans Pelicans", arena: "Smoothie King Center", cap: "111.00%", arch: "18/30", reddit: "27,321", index: 58.90, logo: "1610612740" },
+        { rank: 11, team: "Orlando Magic", arena: "Kia Center", cap: "101.19%", arch: "18/30", reddit: "53,050", index: 58.62, logo: "1610612753" },
+        { rank: 12, team: "Minnesota Timberwolves", arena: "Target Center", cap: "103.13%", arch: "19/30", reddit: "41,401", index: 56.11, logo: "1610612750" },
+        { rank: 13, team: "Oklahoma City Thunder", arena: "Paycom Center", cap: "103.47%", arch: "18/30", reddit: "34,744", index: 54.81, logo: "1610612760" },
+        { rank: 14, team: "Milwaukee Bucks", arena: "Fiserv Forum", cap: "103.64%", arch: "20/30", reddit: "50,113", index: 54.80, logo: "1610612749" },
+        { rank: 15, team: "Memphis Grizzlies", arena: "FedExForum", cap: "101.52%", arch: "20/30", reddit: "42,808", index: 52.51, logo: "1610612763" },
+        { rank: 16, team: "Miami Heat", arena: "Kaseya Center", cap: "92.73%", arch: "21/30", reddit: "48,412", index: 49.82, logo: "1610612748" },
+        { rank: 17, team: "Indiana Pacers", arena: "Gainbridge Fieldhouse", cap: "97.90%", arch: "22/30", reddit: "39,303", index: 49.14, logo: "1610612754" },
+        { rank: 18, team: "Golden State Warriors", arena: "Chase Center", cap: "96.31%", arch: "20/30", reddit: "35,788", index: 39.88, logo: "1610612744" },
+        { rank: 19, team: "L.A. Lakers", arena: "Crypto.com Arena", cap: "91.75%", arch: "19/30", reddit: "68,295", index: 39.40, logo: "1610612747" },
+        { rank: 20, team: "L.A. Clippers", arena: "Intuit Dome", cap: "93.91%", arch: "19/30", reddit: "30,645", index: 38.45, logo: "1610612746" },
+        { rank: 21, team: "Houston Rockets", arena: "Toyota Center", cap: "96.84%", arch: "17/30", reddit: "34,953", index: 32.49, logo: "1610612745" },
+        { rank: 22, team: "Detroit Pistons", arena: "Little Caesars Arena", cap: "84.44%", arch: "19/30", reddit: "67,221", index: 30.15, logo: "1610612765" },
+        { rank: 23, team: "Boston Celtics", arena: "TD Garden", cap: "86.92%", arch: "22/30", reddit: "59,879", index: 29.59, logo: "1610612738" },
+        { rank: 24, team: "Dallas Mavericks", arena: "American Airlines Ctr", cap: "87.58%", arch: "18/30", reddit: "80,959", index: 29.02, logo: "1610612742" },
+        { rank: 25, team: "Denver Nuggets", arena: "Ball Arena", cap: "87.45%", arch: "19/30", reddit: "47,921", index: 28.20, logo: "1610612743" },
+        { rank: 26, team: "Cleveland Cavaliers", arena: "Rocket Arena", cap: "86.03%", arch: "20/30", reddit: "57,662", index: 28.05, logo: "1610612739" },
+        { rank: 27, team: "Atlanta Hawks", arena: "State Farm Arena", cap: "96.46%", arch: "18/30", reddit: "44,105", index: 26.15, logo: "1610612737" },
+        { rank: 28, team: "Chicago Bulls", arena: "United Center", cap: "79.65%", arch: "21/30", reddit: "61,748", index: 25.48, logo: "1610612741" },
+        { rank: 29, team: "Charlotte Hornets", arena: "Spectrum Center", cap: "86.88%", arch: "17/30", reddit: "59,309", index: 19.09, logo: "1610612766" },
+        { rank: 30, team: "Brooklyn Nets", arena: "Barclays Center", cap: "93.42%", arch: "16/30", reddit: "29,436", index: 16.32, logo: "1610612751" }
+    ];
+
+    const teamList = document.getElementById('team-list');
+    
+    allTeams.forEach(team => {
+        const row = document.createElement('div');
+        row.className = 'team-row';
+        row.innerHTML = `
+            <div class="rank ${team.rank <= 5 ? 'rank-top' : ''}">${team.rank}</div>
+            <div class="team-info">
+                <img class="team-logo" src="https://cdn.nba.com/logos/nba/${team.logo}/primary/L/logo.svg" alt="${team.team}">
+                <div class="team-names">
+                    <span class="team-name">${team.team}</span>
+                    <span class="arena-name">${team.arena}</span>
+                </div>
+            </div>
+            <div class="stat">${team.cap}</div>
+            <div class="stat">${team.arch}</div>
+            <div class="stat reddit-count">${team.reddit}</div>
+            <div class="stat">
+                <span class="index-badge ${team.rank <= 5 ? 'top-badge' : ''}">${team.index.toFixed(2)}</span>
+            </div>
+        `;
+        teamList.appendChild(row);
+    });
+</script>
+
+</body>
+</html>
