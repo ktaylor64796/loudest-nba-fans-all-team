@@ -3,21 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All 30 NBA Fanbases Ranked - RotoGrinders</title>
+    <title>NBA Loudness Index: Full Rankings - Vegas Insider Edition</title>
     <style>
         :root {
-            --rg-dark: #1a1d21;
-            --rg-panel: #24282d;
-            --rg-green: #27ae60;
-            --rg-blue: #3498db;
-            --rg-text: #ffffff;
-            --rg-border: #3d434a;
+            /* Vegas Insider Official Palette */
+            --vi-white: #ffffff;
+            --vi-dark-bg: #111111; 
+            --vi-text-black: #222222; 
+            
+            /* Gold Gradient Definitions */
+            --vi-gold-start: #e1b241; 
+            --vi-gold-end: #ab802c;   
+            --vi-gold-mid: #c79737;    
+
+            /* UI Details */
+            --vi-gray-ui: #eeeeee; 
+            --vi-border-color: #d8d8d8;
         }
 
         body {
-            background-color: var(--rg-dark);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: var(--rg-text);
+            background-color: #ffffff; 
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: var(--vi-text-black);
             margin: 0;
             padding: 20px;
             display: flex;
@@ -27,98 +34,165 @@
         .container {
             width: 100%;
             max-width: 1000px;
-            background: var(--rg-panel);
-            border-radius: 12px;
-            border: 1px solid var(--rg-border);
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: #ffffff;
+            border: 1px solid var(--vi-border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .title-block { margin-bottom: 25px; }
-        h2 { margin: 0; font-size: 24px; text-transform: uppercase; color: var(--rg-green); }
-        .subtitle { color: #bdc3c7; font-size: 14px; margin-top: 5px; }
+        /* Vegas Insider Branded Header */
+        .vi-header {
+            background-color: var(--vi-dark-bg); 
+            color: var(--vi-white); 
+            padding: 22px 25px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 22px;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: var(--vi-white);
+        }
+
+        .subtitle {
+            background-color: #f8f8f8;
+            padding: 12px 25px;
+            font-size: 13px;
+            color: #666;
+            border-bottom: 1px solid var(--vi-border-color);
+            font-style: italic;
+        }
 
         .header-row {
             display: grid;
-            grid-template-columns: 50px 1fr 100px 100px 120px 140px;
-            padding: 15px 10px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 6px;
+            grid-template-columns: 70px 1fr 100px 100px 120px 140px;
+            padding: 12px 10px;
+            background: var(--vi-gray-ui);
             font-weight: bold;
             font-size: 11px;
-            color: #95a5a6;
+            color: #444;
             text-transform: uppercase;
-            margin-bottom: 5px;
+            border-bottom: 2px solid var(--vi-border-color);
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 10;
         }
 
-        .header-row div:nth-child(2) { text-align: left; }
+        .header-row div:nth-child(2) { text-align: left; padding-left: 10px; }
 
         .team-row {
             display: grid;
-            grid-template-columns: 50px 1fr 100px 100px 120px 140px;
+            grid-template-columns: 70px 1fr 100px 100px 120px 140px;
             align-items: center;
             padding: 12px 10px;
-            border-bottom: 1px solid var(--rg-border);
-            transition: background 0.1s;
+            border-bottom: 1px solid var(--vi-border-color);
+            transition: background 0.15s;
         }
 
-        .team-row:hover { background: rgba(255,255,255,0.03); }
+        .team-row:nth-child(even) {
+            background-color: #fafafa;
+        }
 
-        .rank { font-weight: bold; font-size: 16px; color: #bdc3c7; text-align: center; }
-        .rank-top { color: var(--rg-green); font-size: 18px; }
+        .team-row:hover {
+            background: #fffbef; 
+        }
+
+        /* Rank Box Styling */
+        .rank-box {
+            font-family: Arial, sans-serif;
+            font-weight: 800;
+            font-size: 15px;
+            color: #666; /* Default color for non-top ranks */
+            text-align: center;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            margin: 0 auto;
+        }
+
+        /* Top 5 Gold Rank Styling */
+        .rank-top {
+            color: var(--vi-white);
+            background: linear-gradient(135deg, var(--vi-gold-start), var(--vi-gold-mid) 40%, var(--vi-gold-end));
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
 
         .team-info { display: flex; align-items: center; gap: 12px; }
         .team-logo { width: 32px; height: 32px; object-fit: contain; }
-        .team-names { display: flex; flex-direction: column; }
-        .team-name { font-weight: bold; font-size: 14px; }
-        .arena-name { font-size: 11px; color: #7f8c8d; }
-
-        .stat { font-family: 'Roboto Mono', monospace; font-size: 13px; text-align: center; }
-        .reddit-count { color: #ff4500; }
         
-        .index-badge {
-            background: var(--rg-blue);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: bold;
-            display: inline-block;
-            min-width: 50px;
-        }
-        .top-badge { background: var(--rg-green); }
+        .team-names { display: flex; flex-direction: column; }
+        .team-name { font-weight: 700; font-size: 14px; color: var(--vi-text-black); }
+        .arena-name { font-size: 11px; color: #888; margin-top: 2px; }
 
-        /* Small screen adjustments */
+        .stat { font-family: Arial, sans-serif; font-weight: 600; text-align: center; font-size: 13px; color: #333; }
+        
+        /* Index Badge Styling */
+        .index-badge {
+            color: var(--vi-white);
+            background: #555; /* Neutral for non-top ranks */
+            padding: 5px 0;
+            border-radius: 3px;
+            font-size: 13px;
+            font-weight: 800;
+            display: block;
+            width: 80px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Gold Badge for Top 5 */
+        .top-badge {
+            background: linear-gradient(135deg, var(--vi-gold-start), var(--vi-gold-end));
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            font-size: 14px;
+        }
+
+        .reddit-count { color: #555; font-size: 13px; }
+
+        .vi-footer {
+            padding: 15px;
+            text-align: right;
+            font-size: 11px;
+            color: #999;
+            background: #f8f8f8;
+            border-top: 1px solid var(--vi-border-color);
+        }
+
         @media (max-width: 768px) {
-            .header-row, .team-row { grid-template-columns: 40px 1fr 80px 100px; }
-            .header-row div:nth-child(3), .header-row div:nth-child(4),
-            .team-row div:nth-child(3), .team-row div:nth-child(4) { display: none; }
+            .header-row, .team-row { grid-template-columns: 50px 1fr 100px; }
+            .header-row div:nth-child(3), .header-row div:nth-child(4), .header-row div:nth-child(5),
+            .team-row div:nth-child(3), .team-row div:nth-child(4), .team-row div:nth-child(5) { display: none; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="title-block">
+    <div class="vi-header">
         <h2>NBA Loudness Index: Full Rankings</h2>
-        <p class="subtitle">2024-25 Season Data: Attendance, Capacity Fill, Arena Design & Reddit Engagement</p>
+    </div>
+    
+    <div class="subtitle">
+        Proprietary analysis based on 2024-25 Attendance consistency, Capacity Fill %, and Arena Acoustics.
     </div>
 
     <div class="header-row">
         <div>Rank</div>
-        <div>Team / Arena</div>
-        <div>Capacity %</div>
-        <div>Arch Score</div>
-        <div>Reddit Activity</div>
-        <div>Index (0-100)</div>
+        <div>Arena / Team</div>
+        <div>Capacity</div>
+        <div>Arch</div>
+        <div>Reddit</div>
+        <div>Loudness</div>
     </div>
 
-    <div id="team-list">
-        </div>
+    <div id="team-list"></div>
+
+    <div class="vi-footer">
+        © 2024-25 Vegas Insider NBA Loudness Index
+    </div>
 </div>
 
 <script>
@@ -161,7 +235,7 @@
         const row = document.createElement('div');
         row.className = 'team-row';
         row.innerHTML = `
-            <div class="rank ${team.rank <= 5 ? 'rank-top' : ''}">${team.rank}</div>
+            <div class="rank"><div class="rank-box ${team.rank <= 5 ? 'rank-top' : ''}">${team.rank}</div></div>
             <div class="team-info">
                 <img class="team-logo" src="https://cdn.nba.com/logos/nba/${team.logo}/primary/L/logo.svg" alt="${team.team}">
                 <div class="team-names">
